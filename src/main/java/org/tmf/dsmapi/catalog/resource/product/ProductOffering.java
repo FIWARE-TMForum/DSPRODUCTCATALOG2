@@ -236,7 +236,7 @@ public class ProductOffering extends AbstractCatalogEntity implements Serializab
         @JoinColumn(name = "ENTITY_ID", referencedColumnName = "ID"),
         @JoinColumn(name = "ENTITY_VERSION", referencedColumnName = "VERSION")
     })
-    private ServiceLevelAgreement serviceLevelAgreement;
+    private List<ServiceLevelAgreement> serviceLevelAgreement;
 
     @Embedded
     @AttributeOverrides({
@@ -333,11 +333,11 @@ public class ProductOffering extends AbstractCatalogEntity implements Serializab
         this.bundledProductOffering = bundledProductOffering;
     }
 
-    public ServiceLevelAgreement getServiceLevelAgreement() {
+    public List<ServiceLevelAgreement> getServiceLevelAgreement() {
         return serviceLevelAgreement;
     }
 
-    public void setServiceLevelAgreement(ServiceLevelAgreement serviceLevelAgreement) {
+    public void setServiceLevelAgreement(List<ServiceLevelAgreement> serviceLevelAgreement) {
         this.serviceLevelAgreement = serviceLevelAgreement;
     }
 
@@ -610,7 +610,9 @@ public class ProductOffering extends AbstractCatalogEntity implements Serializab
         productOffering.bundledProductOffering = new ArrayList<BundledProductReference>();
         productOffering.bundledProductOffering.add(BundledProductReference.createProto());
 
-        productOffering.serviceLevelAgreement = ServiceLevelAgreement.createProto();
+        productOffering.serviceLevelAgreement = new ArrayList<ServiceLevelAgreement>();
+        productOffering.serviceLevelAgreement.add(ServiceLevelAgreement.createProto());
+
         productOffering.productSpecification = CatalogReference.createProto();
         productOffering.serviceCandidate = CatalogReference.createProto();
         productOffering.resourceCandidate = CatalogReference.createProto();
