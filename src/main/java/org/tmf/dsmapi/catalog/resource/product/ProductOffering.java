@@ -228,7 +228,7 @@ public class ProductOffering extends AbstractCatalogEntity implements Serializab
     @EntityReferenceProperty(classId=ProductOffering.class)
     private List<BundledProductReference> bundledProductOffering;
 
-    @Embedded
+    //@Embedded
     @ElementCollection
     @CollectionTable(name = "CRI_PRODUCT_OFFER_R_SLA", joinColumns = {
         @JoinColumn(name = "CATALOG_ID", referencedColumnName = "CATALOG_ID"),
