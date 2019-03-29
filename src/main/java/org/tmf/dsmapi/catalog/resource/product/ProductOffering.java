@@ -228,8 +228,15 @@ public class ProductOffering extends AbstractCatalogEntity implements Serializab
     @EntityReferenceProperty(classId=ProductOffering.class)
     private List<BundledProductReference> bundledProductOffering;
 
-    @Embedded
-    private ServiceLevelAgreement serviceLevelAgreement;
+    //@Embedded
+    @ElementCollection
+    @CollectionTable(name = "CRI_PRODUCT_OFFER_R_SLA", joinColumns = {
+        @JoinColumn(name = "CATALOG_ID", referencedColumnName = "CATALOG_ID"),
+        @JoinColumn(name = "CATALOG_VERSION", referencedColumnName = "CATALOG_VERSION"),
+        @JoinColumn(name = "ENTITY_ID", referencedColumnName = "ID"),
+        @JoinColumn(name = "ENTITY_VERSION", referencedColumnName = "VERSION")
+    })
+    private List<ServiceLevelAgreement> serviceLevelAgreement;
 
     @Embedded
     @AttributeOverrides({
@@ -326,11 +333,11 @@ public class ProductOffering extends AbstractCatalogEntity implements Serializab
         this.bundledProductOffering = bundledProductOffering;
     }
 
-    public ServiceLevelAgreement getServiceLevelAgreement() {
+    public List<ServiceLevelAgreement> getServiceLevelAgreement() {
         return serviceLevelAgreement;
     }
 
-    public void setServiceLevelAgreement(ServiceLevelAgreement serviceLevelAgreement) {
+    public void setServiceLevelAgreement(List<ServiceLevelAgreement> serviceLevelAgreement) {
         this.serviceLevelAgreement = serviceLevelAgreement;
     }
 
@@ -603,7 +610,9 @@ public class ProductOffering extends AbstractCatalogEntity implements Serializab
         productOffering.bundledProductOffering = new ArrayList<BundledProductReference>();
         productOffering.bundledProductOffering.add(BundledProductReference.createProto());
 
-        productOffering.serviceLevelAgreement = ServiceLevelAgreement.createProto();
+        productOffering.serviceLevelAgreement = new ArrayList<ServiceLevelAgreement>();
+        productOffering.serviceLevelAgreement.add(ServiceLevelAgreement.createProto());
+
         productOffering.productSpecification = CatalogReference.createProto();
         productOffering.serviceCandidate = CatalogReference.createProto();
         productOffering.resourceCandidate = CatalogReference.createProto();
